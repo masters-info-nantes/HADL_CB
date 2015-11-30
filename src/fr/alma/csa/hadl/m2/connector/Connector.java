@@ -19,5 +19,56 @@ public abstract class Connector {
 		requiredRoles.add(reqrole);	
 	}
 	
+	public void addProvidedRole(ProvidedRole provRole){
+		providedRoles.add(provRole);
+	}
+	
+	public void addRequiredRole(RequiredRole reqRole){
+		requiredRoles.add(reqRole);
+	}
+	
+	public void addProperty( Property prop){
+		properties.add(prop);
+	}
+	
+	public void addConstraint( Constraint constr){
+		constraints.add(constr);
+	}
+	
+	public void rmvProvidedRole(ProvidedRole provRole){
+		providedRoles.remove(provRole);
+	}
+	
+	public void rmvRequiredRole(RequiredRole reqRole){
+		requiredRoles.remove(reqRole);
+	}
+	
+	public void rmvProperty( Property prop){
+		properties.remove(prop);
+	}
+	
+	public void rmvConstraint( Constraint constr){
+		constraints.remove(constr);
+	}
+
+	public List<ProvidedRole> getProvidedRoles() {
+		return providedRoles;
+	}
+
+	public List<RequiredRole> getRequiredRoles() {
+		return requiredRoles;
+	}
+
+	public List<Constraint> getConstraints() {
+		return constraints;
+	}
+
+	public List<Property> getProperties() {
+		return properties;
+	}
+	
+	public void execute(){
+		//TODO
+	}
 	
 }

@@ -13,4 +13,16 @@ public class SimpleConnector extends Connector{
 		this.glue = glue;
 	}
 
+	public Glue getGlue() {
+		return glue;
+	}
+
+	public void setGlue(Glue glue) {
+		this.glue = glue;
+	}
+	
+	public void execute(){
+		//TODO
+	}
+
 }

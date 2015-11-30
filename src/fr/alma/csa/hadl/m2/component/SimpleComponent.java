@@ -3,7 +3,9 @@ package fr.alma.csa.hadl.m2.component;
 import java.util.List;
 
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
+import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortComponent;
+import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortConfiguration;
 
 public class SimpleComponent extends Component{
 	
@@ -18,4 +20,21 @@ public class SimpleComponent extends Component{
 		providedPorts.add(port);
 		requiredPorts.add(reqport);
 	}
+	
+	public void addProvidedPort( ProvidedPortComponent provPort){
+		providedPorts.add(provPort);
+	}
+	
+	public void addRequiredPort( RequiredPortComponent reqServ){
+		requiredPorts.add(reqServ);
+	}
+
+	public List<ProvidedPortComponent> getProvidedPorts() {
+		return providedPorts;
+	}
+
+	public List<RequiredPortComponent> getRequiredPorts() {
+		return requiredPorts;
+	}
+	
 }
