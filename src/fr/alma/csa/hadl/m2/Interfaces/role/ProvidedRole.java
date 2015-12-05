@@ -1,5 +1,5 @@
 package fr.alma.csa.hadl.m2.Interfaces.role;
 
-public class ProvidedRole implements Role{
+public abstract class ProvidedRole extends Role{
 
 }

@@ -1,7 +1,12 @@
 package fr.alma.csa.hadl.m2.component;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
+import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
+import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPort;
+import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.service.ProvidedService;
 import fr.alma.csa.hadl.m2.Interfaces.service.RequiredService;
 import fr.alma.csa.hadl.m2.other.Constraint;
@@ -12,8 +17,20 @@ public abstract class Component {
 	protected List<ProvidedService> providedServices;
 	protected List<RequiredService> requiredServices;
 	
+	protected List<ProvidedPort> providedPort;
+	protected List<RequiredPort> requiredPort;
+	
 	protected List<Property> properties;
 	protected List<Constraint> constraints;
+	
+	public Component(ProvidedService service) {
+		providedServices = new ArrayList<ProvidedService>();
+		providedServices.add(service);
+		
+		requiredServices = new ArrayList<RequiredService>();
+		properties = new ArrayList<Property>();
+		constraints = new ArrayList<Constraint>();
+	}
 	
 	public void addProvidedService( ProvidedService provServ){
 		providedServices.add(provServ);
@@ -64,4 +81,11 @@ public abstract class Component {
 		return constraints;
 	}
 	
+	public List<ProvidedPort> getProvidedPorts() {
+		return providedPort;
+	}
+
+	public List<RequiredPort> getRequiredPorts() {
+		return requiredPort;
+	}
 }

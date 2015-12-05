@@ -20,9 +20,4 @@ public class SimpleConnector extends Connector{
 	public void setGlue(Glue glue) {
 		this.glue = glue;
 	}
-	
-	public void execute(){
-		//TODO
-	}
-
 }

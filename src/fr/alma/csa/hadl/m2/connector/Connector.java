@@ -67,8 +67,4 @@ public abstract class Connector {
 		return properties;
 	}
 	
-	public void execute(){
-		//TODO
-	}
-	
 }

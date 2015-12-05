@@ -19,10 +19,5 @@ public class ComplexConnector extends Connector{
 
 	public void setConfiguration(Configuration configuration) {
 		this.configuration = configuration;
-	}
-
-	public void execute(){
-		//TODO
-	}
-		
+	}		
 }
