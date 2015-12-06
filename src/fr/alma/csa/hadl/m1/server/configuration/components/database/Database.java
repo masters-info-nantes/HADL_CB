@@ -22,10 +22,15 @@ public class Database extends SimpleComponent{
 	public Database(QueryDSendService service) {
 		super((QueryDSend)service.getPort(), service);
 		
-		QueryDReceive queryDS = new QueryDReceive();
-		this.queryDRcv = new QueryDReceiveService(queryDS);
-		this.addRequiredPort(queryDS);
+		QueryDReceive queryDSR = new QueryDReceive();
+		this.queryDRcv = new QueryDReceiveService(queryDSR);
+		this.addRequiredPort(queryDSR);
 		this.addRequiredService(queryDRcv);
+		
+		QueryDSend queryDS = new QueryDSend();
+		this.queryDSend = new QueryDSendService(queryDS);
+		this.addProvidedPort(queryDS);
+		this.addProvidedService(queryDSend);
 		
 		SecurityManagementReceive secuMRcv = new SecurityManagementReceive();
 		this.securityManRcv = new SecurityManagementReceiveService(secuMRcv);

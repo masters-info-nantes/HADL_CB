@@ -47,4 +47,36 @@ public class SQLQuery extends SimpleConnector{
 			doSomethingDBQuery(fromDBQuery.getO());
 		}
 	}
+
+	public FromDBQuerySend getFromDBQuery() {
+		return fromDBQuery;
+	}
+
+	public void setFromDBQuery(FromDBQuerySend fromDBQuery) {
+		this.fromDBQuery = fromDBQuery;
+	}
+
+	public ToDBQueryReceive getToDBQuery() {
+		return toDBQuery;
+	}
+
+	public void setToDBQuery(ToDBQueryReceive toDBQuery) {
+		this.toDBQuery = toDBQuery;
+	}
+
+	public FromQueryDSend getFromQueryD() {
+		return fromQueryD;
+	}
+
+	public void setFromQueryD(FromQueryDSend fromQueryD) {
+		this.fromQueryD = fromQueryD;
+	}
+
+	public ToQueryDReceive getToQueryD() {
+		return toQueryD;
+	}
+
+	public void setToQueryD(ToQueryDReceive toQueryD) {
+		this.toQueryD = toQueryD;
+	}
 }

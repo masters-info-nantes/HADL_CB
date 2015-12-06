@@ -2,8 +2,10 @@ package fr.alma.csa.hadl.m2.component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
@@ -31,7 +33,7 @@ public class Configuration extends Component{
 	protected List<Connector> connectors;
 	protected List<Component> components;
 	
-	protected Map<Connector,List<Component>> connexions;
+	protected Map<Connector,Set<Component>> connexions;
 	
 	public Configuration(ProvidedPortConfiguration provport, RequiredPortConfiguration reqport, ProvidedService provserv, RequiredService reqserv, Component comp){
 		super(provserv);
@@ -39,7 +41,7 @@ public class Configuration extends Component{
 		
 		connectors = new ArrayList<Connector>();
 		components = new ArrayList<Component>();
-		connexions = new HashMap<Connector,List<Component>>();
+		connexions = new HashMap<Connector,Set<Component>>();
 		bindings = new ArrayList<Binding>();
 		attachements = new ArrayList<Attachement>();
 		
@@ -72,20 +74,31 @@ public class Configuration extends Component{
 		requiredPort.add(reqServ);
 	}
 	
-	public void addConnector( Connector connect, ProvidedRole provRole, RequiredRole reqRole, Component firstComp, ProvidedPort firstReq, Component secondComp, RequiredPort secondProv){
-		attachements.add(new AttachementToRequiredPort(secondProv, provRole));
-		attachements.add(new AttachementToRequiredRole(firstReq, reqRole));
+	public void addConnector( Connector connect, ProvidedRole provRole, RequiredRole reqRole, Component firstComp, ProvidedPort firstprov, Component secondComp, RequiredPort secondRequ){
+		attachements.add(new AttachementToRequiredPort(secondRequ, provRole));
+		attachements.add(new AttachementToRequiredRole(firstprov, reqRole));
 		
 		connectors.add(connect);
-		List<Component> temp = new ArrayList<Component>();
+		Set<Component> temp = new HashSet<Component>();
 		temp.add(firstComp);
 		temp.add(secondComp);
 		connexions.put(connect,temp);
 	}
 	
-	public void addAttachement(ProvidedRole provRole, RequiredRole reqRole, RequiredPortComponent firstReq, ProvidedPortComponent secondProv){
-		attachements.add(new AttachementToRequiredPort(firstReq, provRole));
-		attachements.add(new AttachementToRequiredRole(secondProv, reqRole));
+	public void addAttachement(Connector conn, ProvidedRole provRole, RequiredRole reqRole, Component firstComp , ProvidedPort firstProv, Component secondComp, RequiredPort secondReq){
+		attachements.add(new AttachementToRequiredPort(secondReq, provRole));
+		attachements.add(new AttachementToRequiredRole(firstProv, reqRole));
+		
+		if(this.connexions.containsKey(conn)){
+			this.connexions.get(conn).add(firstComp);
+			this.connexions.get(conn).add(secondComp);
+		}
+		else{
+			Set<Component> temp = new HashSet<Component>();
+			temp.add(firstComp);
+			temp.add(secondComp);
+			this.connexions.put(conn, temp);
+		}
 	}
 	
 	public void rmvConnector( Connector connect){
@@ -105,7 +118,7 @@ public class Configuration extends Component{
 	}
 	
 	public void rmvComponent( Component comp){
-		for(Map.Entry<Connector,List<Component>> m : connexions.entrySet()){
+		for(Map.Entry<Connector,Set<Component>> m : connexions.entrySet()){
 			if(m.getValue().contains(comp)){
 				for(Attachement a : attachements){
 					if(comp.getRequiredPorts().contains(a.getPort()) || comp.getProvidedPorts().contains(a.getPort())){
@@ -126,7 +139,7 @@ public class Configuration extends Component{
 		return components;
 	}
 
-	public Map<Connector, List<Component>> getConnexions() {
+	public Map<Connector, Set<Component>> getConnexions() {
 		return connexions;
 	}
 	

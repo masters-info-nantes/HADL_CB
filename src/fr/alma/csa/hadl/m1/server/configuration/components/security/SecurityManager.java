@@ -2,6 +2,7 @@ package fr.alma.csa.hadl.m1.server.configuration.components.security;
 
 import fr.alma.csa.hadl.m1.server.configuration.components.security.auth.SecurityAuthReceive;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.auth.SecurityAuthReceiveService;
+import fr.alma.csa.hadl.m1.server.configuration.components.security.auth.SecurityAuthSend;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.auth.SecurityAuthSendService;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.CheckQueryReceive;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.CheckQueryReceiveService;
@@ -25,6 +26,11 @@ public class SecurityManager extends SimpleComponent{
 		secuAuthRcv = new SecurityAuthReceiveService(authP);
 		this.addRequiredPort(authP);
 		this.addRequiredService(secuAuthRcv);
+		
+		SecurityAuthSend authSP = new SecurityAuthSend(); 
+		secuAuthSend = new SecurityAuthSendService(authSP);
+		this.addProvidedPort(authSP);
+		this.addProvidedService(secuAuthSend);
 		
 		CheckQuerySend checkP = new CheckQuerySend();
 		checkQuerySend = new CheckQuerySendService(checkP);

@@ -48,4 +48,38 @@ public class ClearanceRequest extends SimpleConnector{
 			doSomethingCheck(fromSecCheck.getO());
 		}
 	}
+
+	public FromSecurityAuthSend getFromSecAuth() {
+		return fromSecAuth;
+	}
+
+	public void setFromSecAuth(FromSecurityAuthSend fromSecAuth) {
+		this.fromSecAuth = fromSecAuth;
+	}
+
+	public ToSecurityAuthReceive getToSecAuth() {
+		return toSecAuth;
+	}
+
+	public void setToSecAuth(ToSecurityAuthReceive toSecAuth) {
+		this.toSecAuth = toSecAuth;
+	}
+
+	public FromSecurityCheckSend getFromSecCheck() {
+		return fromSecCheck;
+	}
+
+	public void setFromSecCheck(FromSecurityCheckSend fromSecCheck) {
+		this.fromSecCheck = fromSecCheck;
+	}
+
+	public ToSecurityCheckReceive getToSecCheck() {
+		return toSecCheck;
+	}
+
+	public void setToSecCheck(ToSecurityCheckReceive toSecCheck) {
+		this.toSecCheck = toSecCheck;
+	}
+	
+	
 }
