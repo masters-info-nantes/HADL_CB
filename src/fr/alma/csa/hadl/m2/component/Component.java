@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
-import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPort;
-import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.service.ProvidedService;
 import fr.alma.csa.hadl.m2.Interfaces.service.RequiredService;
 import fr.alma.csa.hadl.m2.other.Constraint;
