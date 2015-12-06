@@ -7,7 +7,7 @@ public class FromClientSendRequestPort extends RequiredRole{
 	@Override
 	public void setO(Object o) {
 		// TODO Auto-generated method stub
-		System.out.println("Passage dans FromClientSendRequestPort, update : " + o.toString());
+		System.out.println("Passage dans FromClientSendRequestPort, setO : " + o.toString());
 		super.setO(o);
 	}
 }
