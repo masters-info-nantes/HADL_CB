@@ -6,7 +6,7 @@ public class ClientReceiveRequestPort extends RequiredPortComponent{
 	@Override
 	public void setO(Object o) {
 		// TODO Auto-generated method stub
-		super.setO(o);
 		System.out.println("Passage dans ClientReceiveRequestPort, setO : " + o.toString());
+		super.setO(o);
 	}
 }

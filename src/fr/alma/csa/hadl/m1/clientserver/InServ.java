@@ -8,5 +8,9 @@ public class InServ extends RequiredService{
 		super(port);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void newRequest(Object o){
+		this.port.setO(o);
+	}
 
 }

@@ -20,7 +20,6 @@ import fr.alma.csa.hadl.m1.server.ServerSendRequestService;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		ClientSendRequestPort sendP = new ClientSendRequestPort();
 		ClientSendRequestService serv = new ClientSendRequestService(sendP);
@@ -43,7 +42,12 @@ public class Main {
 		RPCConnexion rpc = new RPCConnexion(to, from);
 		cs.addConnector(rpc, to, from, client, client.getSndReqst().getPort(), server, server.getRcvServ().getPort());
 		
-		client.sendRequest("bonjour");
+		System.out.println("New request in Client/Server :\n");
+		//client.sendRequest("bonjour");
+		cs.sendRequest("bonjour");
+		System.out.println("\n\n\n\n");
+		
+		
 	}
 
 }

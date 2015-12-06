@@ -3,6 +3,7 @@ package fr.alma.csa.hadl.m2.Liens;
 import java.util.Observable;
 import java.util.Observer;
 
+import fr.alma.csa.hadl.m2.Interfaces.ConnexionPoint;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
 
@@ -15,6 +16,7 @@ public class BindingOnProvidedPort extends Binding implements Observer{
 		super();
 		this.portConfiguration = portConfiguration;
 		this.portComponent = portComponent;
+		this.portConfiguration.addObserver(this);
 	}
 
 	public ProvidedPortConfiguration getPortConfiguration() {
@@ -35,7 +37,9 @@ public class BindingOnProvidedPort extends Binding implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		if(o == this.getPortConfiguration()){
+			System.out.println("Passage dans BindingOnProvidedPort, update : " + ((ConnexionPoint)o).getO().toString());
+			this.portComponent.setO(((ConnexionPoint)o).getO());
+		}
 	}
 }

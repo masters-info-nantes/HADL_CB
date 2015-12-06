@@ -9,4 +9,9 @@ public class OutServ extends ProvidedService{
 		// TODO Auto-generated constructor stub
 	}
 
+	public void sendRequest(Object o) {
+		System.out.println("Passage dans OutServ, sendRequest : " + o.toString());
+		this.getPort().setO(o);		
+	}
+
 }
