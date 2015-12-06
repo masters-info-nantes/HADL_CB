@@ -4,7 +4,7 @@ import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
 
 public abstract class ProvidedService extends Service{
 
-	ProvidedPort port;
+	protected ProvidedPort port;
 
 	public ProvidedService(ProvidedPort port) {
 		super();
