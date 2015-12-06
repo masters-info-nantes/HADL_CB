@@ -17,5 +17,21 @@ public abstract class ConnexionPoint extends Observable implements Interface{
 	public void setConnexion(ConnexionMode connexion) {
 		this.connexion = connexion;
 	}
+	
+	Object o;
+
+	public ConnexionPoint() {
+		this.o = null;
+	}
+
+	public Object getO() {
+		return o;
+	}
+
+	public void setO(Object o) {
+		this.o = o;
+		setChanged();
+		notifyObservers();
+	}
 
 }

@@ -30,6 +30,9 @@ public abstract class Component {
 		requiredServices = new ArrayList<RequiredService>();
 		properties = new ArrayList<Property>();
 		constraints = new ArrayList<Constraint>();
+		
+		providedPort = new ArrayList<ProvidedPort>();
+		requiredPort = new ArrayList<RequiredPort>();
 	}
 	
 	public void addProvidedService( ProvidedService provServ){

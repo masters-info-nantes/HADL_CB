@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
+import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPort;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.role.ProvidedRole;
@@ -39,12 +41,13 @@ public class Configuration extends Component{
 		components = new ArrayList<Component>();
 		connexions = new HashMap<Connector,List<Component>>();
 		bindings = new ArrayList<Binding>();
+		attachements = new ArrayList<Attachement>();
 		
 		providedPort.add(provport);
 		requiredPort.add(reqport);
 		components.add(comp);
 	}
-	
+
 	public List<Binding> getBindings(){
 		return bindings;
 	}
@@ -69,9 +72,9 @@ public class Configuration extends Component{
 		requiredPort.add(reqServ);
 	}
 	
-	public void addConnector( Connector connect, ProvidedRole provRole, RequiredRole reqRole, Component firstComp, RequiredPortComponent firstReq, Component secondComp, ProvidedPortComponent secondProv){
-		attachements.add(new AttachementToRequiredPort(firstReq, provRole));
-		attachements.add(new AttachementToRequiredRole(secondProv, reqRole));
+	public void addConnector( Connector connect, ProvidedRole provRole, RequiredRole reqRole, Component firstComp, ProvidedPort firstReq, Component secondComp, RequiredPort secondProv){
+		attachements.add(new AttachementToRequiredPort(secondProv, provRole));
+		attachements.add(new AttachementToRequiredRole(firstReq, reqRole));
 		
 		connectors.add(connect);
 		List<Component> temp = new ArrayList<Component>();

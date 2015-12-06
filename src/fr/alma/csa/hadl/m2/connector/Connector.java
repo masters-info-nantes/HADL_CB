@@ -1,12 +1,15 @@
 package fr.alma.csa.hadl.m2.connector;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import fr.alma.csa.hadl.m2.Interfaces.role.ProvidedRole;
 import fr.alma.csa.hadl.m2.Interfaces.role.RequiredRole;
 import fr.alma.csa.hadl.m2.other.Constraint;
 import fr.alma.csa.hadl.m2.other.Property;
-public abstract class Connector {
+public abstract class Connector implements Observer{
 	
 	protected List<ProvidedRole> providedRoles;
 	protected List<RequiredRole> requiredRoles;
@@ -15,6 +18,12 @@ public abstract class Connector {
 	protected List<Property> properties;
 	
 	public Connector(ProvidedRole provrole, RequiredRole reqrole){
+		providedRoles = new ArrayList<ProvidedRole>();
+		requiredRoles = new ArrayList<RequiredRole>();
+		
+		constraints = new ArrayList<Constraint>();
+		properties = new ArrayList<Property>();
+		
 		providedRoles.add(provrole);
 		requiredRoles.add(reqrole);	
 	}
@@ -67,4 +76,9 @@ public abstract class Connector {
 		return properties;
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 }
