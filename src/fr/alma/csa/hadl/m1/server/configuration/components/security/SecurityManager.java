@@ -10,7 +10,6 @@ import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.C
 import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.CheckQueryReceiveService;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.CheckQuerySend;
 import fr.alma.csa.hadl.m1.server.configuration.components.security.checkQuery.CheckQuerySendService;
-import fr.alma.csa.hadl.m1.server.configuration.connector.clearance.ToSecurityAuthReceive;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.service.Service;
 import fr.alma.csa.hadl.m2.component.SimpleComponent;

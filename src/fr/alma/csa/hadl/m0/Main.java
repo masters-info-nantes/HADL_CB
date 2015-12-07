@@ -43,9 +43,7 @@ public class Main {
 		cs.addConnector(rpc, to, from, client, client.getSndReqst().getPort(), server, server.getRcvServ().getPort());
 		
 		System.out.println("New request in Client/Server :\n");
-		//client.sendRequest("bonjour");
-		cs.sendRequest("bonjour");
-		System.out.println("\n\n\n\n");
+		client.sendRequest("bonjour");
 		
 		
 	}

@@ -2,7 +2,6 @@ package fr.alma.csa.hadl.m1.server.configuration.connector.security;
 
 import java.util.Observable;
 
-import fr.alma.csa.hadl.m1.clientserver.FromClientSendRequestPort;
 import fr.alma.csa.hadl.m1.server.configuration.connector.clearance.ToSecurityAuthReceive;
 import fr.alma.csa.hadl.m2.connector.Glue;
 import fr.alma.csa.hadl.m2.connector.SimpleConnector;

@@ -16,7 +16,7 @@ public class BindingOnProvidedPort extends Binding implements Observer{
 		super();
 		this.portConfiguration = portConfiguration;
 		this.portComponent = portComponent;
-		this.portConfiguration.addObserver(this);
+		this.portComponent.addObserver(this);
 	}
 
 	public ProvidedPortConfiguration getPortConfiguration() {
@@ -37,9 +37,9 @@ public class BindingOnProvidedPort extends Binding implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o == this.getPortConfiguration()){
+		if(o == this.getPortComponent()){
 			System.out.println("Passage dans BindingOnProvidedPort, update : " + ((ConnexionPoint)o).getO().toString());
-			this.portComponent.setO(((ConnexionPoint)o).getO());
+			this.portConfiguration.setO(((ConnexionPoint)o).getO());
 		}
 	}
 }
