@@ -15,6 +15,7 @@ public class CheckQueryReceiveService extends RequiredService{
 	public void update(Observable o, Object arg) {
 		if(o == this.port){
 			System.out.println("Passage dans CheckQueryReceiveService, update : " + ((ConnexionPoint) o).getO().toString());
+			setO(((ConnexionPoint) o).getO());
 		}
 	}
 }

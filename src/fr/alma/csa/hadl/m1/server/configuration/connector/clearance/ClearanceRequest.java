@@ -18,34 +18,34 @@ public class ClearanceRequest extends SimpleConnector{
 		super(new Glue(), reqrole, provrole);
 		fromSecAuth = reqrole;
 		toSecAuth = provrole;
-		fromSecAuth.addObserver(this);
+		toSecAuth.addObserver(this);
 		
 		fromSecCheck = new FromSecurityCheckSend();
 		toSecCheck = new ToSecurityCheckReceive();
-		fromSecCheck.addObserver(this);
+		toSecCheck.addObserver(this);
 	}
 	
 	public void doSomethingAuth(Object o){
 		System.out.println("Passage dans ClearanceRequest, doSomethingAuth : " + o.toString());
 		Object temp = this.getGlue().doNothing(o);
-		this.toSecAuth.setO(temp);
+		this.fromSecCheck.setO(temp);
 	}
 	
 	public void doSomethingCheck(Object o){
 		System.out.println("Passage dans ClearanceRequest, doSomethingCheck : " + o.toString());
 		Object temp = this.getGlue().doNothing(o);
-		this.toSecCheck.setO(temp);
+		this.fromSecAuth.setO(temp);
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o == fromSecAuth){
-			System.out.println("Passage dans ClearanceRequest, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingAuth(fromSecAuth.getO());
+		if(o == toSecAuth){
+			System.out.println("Passage dans ClearanceRequest, update : " + ((ToSecurityAuthReceive)o).getO().toString());
+			doSomethingAuth(((ToSecurityAuthReceive)o).getO());
 		}
-		else if(o == fromSecCheck){
-			System.out.println("Passage dans ClearanceRequest, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingCheck(fromSecCheck.getO());
+		else if(o == toSecCheck){
+			System.out.println("Passage dans ClearanceRequest, update : " + ((ToSecurityCheckReceive)o).getO().toString());
+			doSomethingCheck(((ToSecurityCheckReceive)o).getO());
 		}
 	}
 

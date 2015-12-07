@@ -43,6 +43,7 @@ public class ConnexionManager extends SimpleComponent{
 		this.dbQueryRcv = new DBQueryReceiveService(dbQueryRcvP);
 		this.addRequiredPort(dbQueryRcvP);
 		this.addRequiredService(dbQueryRcv);
+		this.dbQueryRcv.addObserver(this);
 		
 		DBQuerySend dbSendP = new DBQuerySend();
 		this.dbQuerySend = new DBQuerySendService(dbSendP);
@@ -54,6 +55,7 @@ public class ConnexionManager extends SimpleComponent{
 		this.securityRcv = new SecurityCheckReceiveService(scrP);
 		this.addRequiredPort(scrP);
 		this.addRequiredService(securityRcv);
+		this.securityRcv.addObserver(this);
 		
 		SecurityCheckSend scsP = new SecurityCheckSend(); 
 		this.securitySend = new SecurityCheckSendService(scsP);
@@ -118,8 +120,20 @@ public class ConnexionManager extends SimpleComponent{
 			System.out.println("Passage dans ConnexionManager, update : " + ((Service)o).getO().toString());
 			goToDatabase(((Service)o).getO());
 		}
+		else if(o == dbQueryRcv){
+			
+		}
+		else if(o == securityRcv){
+			System.out.println("Passage dans ConnexionManager, update : " + ((Service)o).getO().toString());
+			goToServer(((Service)o).getO());
+		}
 	}
 	
+	private void goToServer(Object o) {
+		System.out.println("Passage dans ConnexionManager, goToServer : " + o.toString());
+		this.socketOut.sendExternalSocket(o);;
+	}
+
 	public void goToDatabase(Object o){
 		System.out.println("Passage dans ConnexionManager, goToDatabase : " + o.toString());
 		this.dbQuerySend.sendQuery(o);

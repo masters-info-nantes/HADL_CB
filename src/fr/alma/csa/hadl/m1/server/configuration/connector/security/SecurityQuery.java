@@ -3,6 +3,7 @@ package fr.alma.csa.hadl.m1.server.configuration.connector.security;
 import java.util.Observable;
 
 import fr.alma.csa.hadl.m1.clientserver.FromClientSendRequestPort;
+import fr.alma.csa.hadl.m1.server.configuration.connector.clearance.ToSecurityAuthReceive;
 import fr.alma.csa.hadl.m2.connector.Glue;
 import fr.alma.csa.hadl.m2.connector.SimpleConnector;
 
@@ -17,34 +18,34 @@ public class SecurityQuery extends SimpleConnector{
 		super(new Glue(), reqrole, provrole);
 		fromCheckQuery = reqrole;
 		toCheckQuery = provrole;
-		fromCheckQuery.addObserver(this);
+		toCheckQuery.addObserver(this);
 		
 		fromSecAuth = new FromSecurityManagementSend();
 		toSecAuth = new ToSecurityManagementReceive();
-		fromSecAuth.addObserver(this);
+		toSecAuth.addObserver(this);
 	}
 	
 	public void doSomethingAuth(Object o){
 		System.out.println("Passage dans SecurityQuery, doSomethingAuth : " + o.toString());
 		Object temp = this.getGlue().doNothing(o);
-		this.toSecAuth.setO(temp);
+		this.fromCheckQuery.setO(temp);
 	}
 	
 	public void doSomethingCheck(Object o){
 		System.out.println("Passage dans SecurityQuery, doSomethingCheck : " + o.toString());
 		Object temp = this.getGlue().doNothing(o);
-		this.toCheckQuery.setO(temp);
+		this.fromSecAuth.setO(temp);
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o == fromSecAuth){
-			System.out.println("Passage dans SecurityQuery, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingAuth(fromSecAuth.getO());
+		if(o == toSecAuth){
+			System.out.println("Passage dans SecurityQuery, update : " + ((ToSecurityAuthReceive)o).getO().toString());
+			doSomethingAuth(((ToSecurityAuthReceive)o).getO());
 		}
-		else if(o == fromCheckQuery){
-			System.out.println("Passage dans SecurityQuery, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingCheck(fromCheckQuery.getO());
+		else if(o == toCheckQuery){
+			System.out.println("Passage dans SecurityQuery, update : " + ((ToCheckQueryReceive)o).getO().toString());
+			doSomethingCheck(((ToCheckQueryReceive)o).getO());
 		}
 	}
 

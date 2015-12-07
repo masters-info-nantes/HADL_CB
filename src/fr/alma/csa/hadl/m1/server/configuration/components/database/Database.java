@@ -92,7 +92,7 @@ public class Database extends SimpleComponent{
 	public void update(Observable o, Object arg) {
 		if(o == queryDRcv){
 			System.out.println("Passage dans Database, update : " + ((Service)o).getO().toString());;
-
+			this.securityManSend.sendSecurityManagement(((Service)o).getO());
 		}
 		else if(o == securityManRcv){
 			System.out.println("Passage dans Database, update : " + ((Service)o).getO().toString());;
