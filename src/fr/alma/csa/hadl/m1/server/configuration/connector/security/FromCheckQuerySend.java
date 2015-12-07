@@ -1,8 +1,8 @@
 package fr.alma.csa.hadl.m1.server.configuration.connector.security;
 
-import fr.alma.csa.hadl.m2.Interfaces.role.RequiredRole;
+import fr.alma.csa.hadl.m2.Interfaces.role.ProvidedRole;
 
-public class FromCheckQuerySend extends RequiredRole{
+public class FromCheckQuerySend extends ProvidedRole{
 	@Override
 	public void setO(Object o) {
 		// TODO Auto-generated method stub

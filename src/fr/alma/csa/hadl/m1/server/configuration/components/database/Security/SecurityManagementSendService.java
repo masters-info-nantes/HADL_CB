@@ -5,7 +5,6 @@ import fr.alma.csa.hadl.m2.Interfaces.service.ProvidedService;
 public class SecurityManagementSendService extends ProvidedService{
 	public SecurityManagementSendService(SecurityManagementSend port) {
 		super(port);
-		this.port = port;
 	}
 	
 	public void sendSecurityManagement(Object o){

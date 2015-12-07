@@ -15,7 +15,7 @@ public class ClearanceRequest extends SimpleConnector{
 	ToSecurityCheckReceive toSecCheck;
 	
 	public ClearanceRequest(ToSecurityAuthReceive provrole, FromSecurityAuthSend reqrole) {
-		super(new Glue(), provrole, reqrole);
+		super(new Glue(), reqrole, provrole);
 		fromSecAuth = reqrole;
 		toSecAuth = provrole;
 		fromSecAuth.addObserver(this);

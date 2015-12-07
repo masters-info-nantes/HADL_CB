@@ -1,5 +1,8 @@
 package fr.alma.csa.hadl.m1.server;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.ConnexionManager;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.externalSOcket.ExternalSocketOut;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.externalSOcket.ExternalSocketOutService;
@@ -22,10 +25,11 @@ import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortConfiguration;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortConfiguration;
+import fr.alma.csa.hadl.m2.Interfaces.service.Service;
 import fr.alma.csa.hadl.m2.component.Component;
 import fr.alma.csa.hadl.m2.component.Configuration;
 
-public class Server extends Configuration{
+public class Server extends Configuration implements Observer{
 	
 	ServerSendRequestService sndServ;
 	ServerReceiveRequestService rcvServ;
@@ -43,6 +47,7 @@ public class Server extends Configuration{
 		
 		this.sndServ = sendSrv;
 		this.rcvServ = rcvSrv;
+		this.rcvServ.addObserver(this);
 		
 		ExternalSocketOutService serv = new ExternalSocketOutService(new ExternalSocketOut());
 		connexionM = new ConnexionManager(serv);
@@ -51,7 +56,6 @@ public class Server extends Configuration{
 		this.addBinding((ProvidedPortConfiguration)this.sndServ.getPort(), (ProvidedPortComponent)connexionM.getSocketOut().getPort());
 		this.addBinding((RequiredPortConfiguration)this.rcvServ.getPort(), (RequiredPortComponent)connexionM.getSocketIn().getPort());
 		
-		connexionM = new ConnexionManager(new ExternalSocketOutService(new ExternalSocketOut()));
 		this.addComponent(connexionM);
 		
 		database = new Database(new QueryDSendService(new QueryDSend()));
@@ -61,17 +65,17 @@ public class Server extends Configuration{
 		this.addComponent(securityManager);
 		
 		clearanceR = new ClearanceRequest(new ToSecurityAuthReceive(), new FromSecurityAuthSend());
-		this.addConnector(clearanceR, clearanceR.getToSecAuth(), clearanceR.getFromSecCheck(), connexionM, connexionM.getSecuritySend().getPort(), securityManager, securityManager.getSecuAuthRcv().getPort());
+		this.addConnector(clearanceR, clearanceR.getFromSecCheck(), clearanceR.getToSecAuth(), connexionM, connexionM.getSecuritySend().getPort(), securityManager, securityManager.getSecuAuthRcv().getPort());
 		
 		securityQuery = new SecurityQuery(new ToCheckQueryReceive(), new FromCheckQuerySend());
-		this.addConnector(securityQuery, securityQuery.getToCheckQuery(), securityQuery.getFromSecManag(), database, database.getSecurityManSend().getPort(), securityManager, securityManager.getCheckQueryRcv().getPort());
+		this.addConnector(securityQuery, securityQuery.getFromSecManag(), securityQuery.getToCheckQuery(), database, database.getSecurityManSend().getPort(), securityManager, securityManager.getCheckQueryRcv().getPort());
 		
 		sqlQuery = new SQLQuery(new ToDBQueryReceive(), new FromDBQuerySend());
-		this.addConnector(sqlQuery, sqlQuery.getToQueryD(), sqlQuery.getFromDBQuery(), connexionM, connexionM.getDbQuerySend().getPort(), database, database.getQueryDRcv().getPort());	
-	
-		this.addAttachement(clearanceR, clearanceR.getToSecCheck(), clearanceR.getFromSecAuth(), securityManager, securityManager.getSecuAuthSend().getPort(), connexionM, connexionM.getSecurityRcv().getPort());
-		this.addAttachement(securityQuery, securityQuery.getToSecManag(), securityQuery.getFromCheckQuery(), securityManager, securityManager.getCheckQuerySend().getPort(), database, database.getSecurityManRcv().getPort());
-		this.addAttachement(sqlQuery, sqlQuery.getToDBQuery(), sqlQuery.getFromQueryD(), database, database.getQueryDSend().getPort(), connexionM, connexionM.getDbQueryRcv().getPort());
+		this.addConnector(sqlQuery, sqlQuery.getFromDBQuery(), sqlQuery.getToQueryD(), connexionM, connexionM.getDbQuerySend().getPort(), database, database.getQueryDRcv().getPort());	
+		
+		this.addAttachement(clearanceR, clearanceR.getFromSecAuth(), clearanceR.getToSecCheck(), securityManager, securityManager.getSecuAuthSend().getPort(), connexionM, connexionM.getSecurityRcv().getPort());
+		this.addAttachement(securityQuery, securityQuery.getFromCheckQuery(), securityQuery.getToSecManag(), securityManager, securityManager.getCheckQuerySend().getPort(), database, database.getSecurityManRcv().getPort());
+		this.addAttachement(sqlQuery, sqlQuery.getFromQueryD(), sqlQuery.getToDBQuery(), database, database.getQueryDSend().getPort(), connexionM, connexionM.getDbQueryRcv().getPort());
 	}
 	
 	public void sendRequest(Object o){
@@ -93,5 +97,12 @@ public class Server extends Configuration{
 
 	public void setRcvServ(ServerReceiveRequestService rcvServ) {
 		this.rcvServ = rcvServ;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg0 == rcvServ){
+			System.out.println("Passage dans Server, update : " + ((Service)arg0).getO().toString());;
+		}
 	}
 }

@@ -5,7 +5,6 @@ import fr.alma.csa.hadl.m2.Interfaces.service.ProvidedService;
 public class QueryDSendService extends ProvidedService{
 	public QueryDSendService(QueryDSend port) {
 		super(port);
-		this.port = port;
 	}
 	
 	public void sendQyeryD(Object o){

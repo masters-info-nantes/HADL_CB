@@ -2,6 +2,7 @@ package fr.alma.csa.hadl.m2.component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPort;
@@ -10,7 +11,7 @@ import fr.alma.csa.hadl.m2.Interfaces.service.RequiredService;
 import fr.alma.csa.hadl.m2.other.Constraint;
 import fr.alma.csa.hadl.m2.other.Property;
 
-public abstract class Component {
+public abstract class Component implements Observer{
 	
 	protected List<ProvidedService> providedServices;
 	protected List<RequiredService> requiredServices;

@@ -15,6 +15,13 @@ public class QueryDReceiveService extends RequiredService{
 	public void update(Observable o, Object arg) {
 		if(o == this.port){
 			System.out.println("Passage dans QueryDReceiveService, update : " + ((ConnexionPoint) o).getO().toString());
+			this.setO(((ConnexionPoint) o).getO());
 		}
+	}
+	
+	@Override
+	public void setO(Object o) {
+		System.out.println("Passage dans QueryDReceiveService, setO : " + o.toString());
+		super.setO(o);
 	}
 }

@@ -2,7 +2,6 @@ package fr.alma.csa.hadl.m1.server.configuration.connector.sqlQuery;
 
 import java.util.Observable;
 
-import fr.alma.csa.hadl.m1.clientserver.FromClientSendRequestPort;
 import fr.alma.csa.hadl.m2.connector.Glue;
 import fr.alma.csa.hadl.m2.connector.SimpleConnector;
 
@@ -14,20 +13,20 @@ public class SQLQuery extends SimpleConnector{
 	ToQueryDReceive toQueryD;
 	
 	public SQLQuery(ToDBQueryReceive provrole, FromDBQuerySend reqrole) {
-		super(new Glue(), provrole, reqrole);
+		super(new Glue(), reqrole, provrole);
 		fromDBQuery = reqrole;
 		toDBQuery = provrole;
-		fromDBQuery.addObserver(this);
+		toDBQuery.addObserver(this);
 		
 		fromQueryD = new FromQueryDSend();
 		toQueryD = new ToQueryDReceive();
-		fromQueryD.addObserver(this);
+		toQueryD.addObserver(this);
 	}
 	
 	public void doSomethingQueryD(Object o){
 		System.out.println("Passage dans SQLQuery, doSomethingQueryD : " + o.toString());
 		Object temp = this.getGlue().doNothing(o);
-		this.toQueryD.setO(temp);
+		this.fromDBQuery.setO(temp);
 	}
 	
 	public void doSomethingDBQuery(Object o){
@@ -38,13 +37,13 @@ public class SQLQuery extends SimpleConnector{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o == fromQueryD){
-			System.out.println("Passage dans SQLQuery, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingQueryD(fromQueryD.getO());
+		if(o == toQueryD){
+			System.out.println("Passage dans SQLQuery, update : " + ((ToQueryDReceive)o).getO().toString());
+			doSomethingQueryD(((ToQueryDReceive)o).getO());
 		}
-		else if(o == fromDBQuery){
-			System.out.println("Passage dans SQLQuery, update : " + ((FromClientSendRequestPort)o).getO().toString());
-			doSomethingDBQuery(fromDBQuery.getO());
+		else if(o == toDBQuery){
+			System.out.println("Passage dans SQLQuery, update : " + ((FromDBQuerySend)o).getO().toString());
+			doSomethingDBQuery(((FromDBQuerySend)o).getO());
 		}
 	}
 

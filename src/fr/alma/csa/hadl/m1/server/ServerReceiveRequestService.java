@@ -15,7 +15,14 @@ public class ServerReceiveRequestService extends RequiredService{
 	public void update(Observable o, Object arg) {
 		if(o == this.getPort()){
 			System.out.println("Passage dans ServerReceiveRequestService, update : " + ((ConnexionPoint) o).getO().toString());
+			this.setO(((ConnexionPoint) o).getO());
 		}
+	}
+	
+	@Override
+	public void setO(Object o) {
+		System.out.println("Passage dans ServerReceiveRequestService, setO : " + o.toString());
+		super.setO(o);
 	}
 
 }

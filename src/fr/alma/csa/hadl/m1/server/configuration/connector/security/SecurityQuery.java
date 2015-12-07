@@ -14,7 +14,7 @@ public class SecurityQuery extends SimpleConnector{
 	ToSecurityManagementReceive toSecAuth;
 	
 	public SecurityQuery(ToCheckQueryReceive provrole, FromCheckQuerySend reqrole) {
-		super(new Glue(), provrole, reqrole);
+		super(new Glue(), reqrole, provrole);
 		fromCheckQuery = reqrole;
 		toCheckQuery = provrole;
 		fromCheckQuery.addObserver(this);

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Set;
 
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPort;
@@ -77,7 +78,6 @@ public class Configuration extends Component{
 	public void addConnector( Connector connect, ProvidedRole provRole, RequiredRole reqRole, Component firstComp, ProvidedPort firstprov, Component secondComp, RequiredPort secondRequ){
 		attachements.add(new AttachementToRequiredPort(secondRequ, provRole));
 		attachements.add(new AttachementToRequiredRole(firstprov, reqRole));
-		
 		connectors.add(connect);
 		Set<Component> temp = new HashSet<Component>();
 		temp.add(firstComp);
@@ -94,6 +94,7 @@ public class Configuration extends Component{
 			this.connexions.get(conn).add(secondComp);
 		}
 		else{
+			connectors.add(conn);
 			Set<Component> temp = new HashSet<Component>();
 			temp.add(firstComp);
 			temp.add(secondComp);
@@ -149,6 +150,12 @@ public class Configuration extends Component{
 	
 	public void rmvAttachement(Attachement attachement) {
 		this.attachements.remove(attachement);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

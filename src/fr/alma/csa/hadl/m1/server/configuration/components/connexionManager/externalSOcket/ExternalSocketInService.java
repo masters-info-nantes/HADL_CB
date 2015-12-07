@@ -15,6 +15,7 @@ public class ExternalSocketInService extends RequiredService{
 	public void update(Observable o, Object arg) {
 		if(o == this.port){
 			System.out.println("Passage dans ExternalSocketInService, update : " + ((ConnexionPoint) o).getO().toString());
+			this.setO(((ConnexionPoint) o).getO());
 		}
 	}
 }

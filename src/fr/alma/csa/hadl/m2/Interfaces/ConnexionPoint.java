@@ -33,5 +33,4 @@ public abstract class ConnexionPoint extends Observable implements Interface{
 		setChanged();
 		notifyObservers();
 	}
-
 }

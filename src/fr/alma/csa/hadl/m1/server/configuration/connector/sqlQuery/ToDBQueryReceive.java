@@ -1,8 +1,8 @@
 package fr.alma.csa.hadl.m1.server.configuration.connector.sqlQuery;
 
-import fr.alma.csa.hadl.m2.Interfaces.role.ProvidedRole;
+import fr.alma.csa.hadl.m2.Interfaces.role.RequiredRole;
 
-public class ToDBQueryReceive extends ProvidedRole{
+public class ToDBQueryReceive extends RequiredRole{
 	@Override
 	public void setO(Object o) {
 		// TODO Auto-generated method stub

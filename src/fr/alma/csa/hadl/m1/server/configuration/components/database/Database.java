@@ -1,5 +1,7 @@
 package fr.alma.csa.hadl.m1.server.configuration.components.database;
 
+import java.util.Observable;
+
 import fr.alma.csa.hadl.m1.server.configuration.components.database.Security.SecurityManagementReceive;
 import fr.alma.csa.hadl.m1.server.configuration.components.database.Security.SecurityManagementReceiveService;
 import fr.alma.csa.hadl.m1.server.configuration.components.database.Security.SecurityManagementSend;
@@ -8,6 +10,7 @@ import fr.alma.csa.hadl.m1.server.configuration.components.database.query.QueryD
 import fr.alma.csa.hadl.m1.server.configuration.components.database.query.QueryDReceiveService;
 import fr.alma.csa.hadl.m1.server.configuration.components.database.query.QueryDSend;
 import fr.alma.csa.hadl.m1.server.configuration.components.database.query.QueryDSendService;
+import fr.alma.csa.hadl.m2.Interfaces.service.Service;
 import fr.alma.csa.hadl.m2.component.SimpleComponent;
 
 public class Database extends SimpleComponent{
@@ -26,6 +29,7 @@ public class Database extends SimpleComponent{
 		this.queryDRcv = new QueryDReceiveService(queryDSR);
 		this.addRequiredPort(queryDSR);
 		this.addRequiredService(queryDRcv);
+		this.queryDRcv.addObserver(this);
 		
 		QueryDSend queryDS = new QueryDSend();
 		this.queryDSend = new QueryDSendService(queryDS);
@@ -36,6 +40,7 @@ public class Database extends SimpleComponent{
 		this.securityManRcv = new SecurityManagementReceiveService(secuMRcv);
 		this.addRequiredPort(secuMRcv);
 		this.addRequiredService(securityManRcv);
+		this.securityManRcv.addObserver(this);
 		
 		SecurityManagementSend smS = new SecurityManagementSend();
 		this.securityManSend = new SecurityManagementSendService(smS);
@@ -82,5 +87,16 @@ public class Database extends SimpleComponent{
 	public void setSecurityManSend(SecurityManagementSendService securityManSend) {
 		this.securityManSend = securityManSend;
 	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o == queryDRcv){
+			System.out.println("Passage dans Database, update : " + ((Service)o).getO().toString());;
 
+		}
+		else if(o == securityManRcv){
+			System.out.println("Passage dans Database, update : " + ((Service)o).getO().toString());;
+
+		}
+	}
 }

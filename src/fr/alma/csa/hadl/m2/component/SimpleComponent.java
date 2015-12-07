@@ -1,5 +1,7 @@
 package fr.alma.csa.hadl.m2.component;
 
+import java.util.Observable;
+
 import fr.alma.csa.hadl.m2.Interfaces.port.ProvidedPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.port.RequiredPortComponent;
 import fr.alma.csa.hadl.m2.Interfaces.service.ProvidedService;
@@ -24,6 +26,12 @@ public class SimpleComponent extends Component{
 	
 	public void addRequiredPort( RequiredPortComponent reqServ){
 		requiredPort.add(reqServ);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

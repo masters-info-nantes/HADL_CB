@@ -1,5 +1,7 @@
 package fr.alma.csa.hadl.m1.server.configuration.components.connexionManager;
 
+import java.util.Observable;
+
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.Security.SecurityCheckReceive;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.Security.SecurityCheckReceiveService;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.Security.SecurityCheckSend;
@@ -12,6 +14,7 @@ import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.exte
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.externalSOcket.ExternalSocketInService;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.externalSOcket.ExternalSocketOut;
 import fr.alma.csa.hadl.m1.server.configuration.components.connexionManager.externalSOcket.ExternalSocketOutService;
+import fr.alma.csa.hadl.m2.Interfaces.service.Service;
 import fr.alma.csa.hadl.m2.component.SimpleComponent;
 
 public class ConnexionManager extends SimpleComponent{
@@ -34,7 +37,8 @@ public class ConnexionManager extends SimpleComponent{
 		this.socketIn = new ExternalSocketInService(portIn);
 		this.addRequiredPort(portIn);
 		this.addRequiredService(this.socketIn);
-		
+		this.socketIn.addObserver(this);
+
 		DBQueryReceive dbQueryRcvP = new DBQueryReceive();
 		this.dbQueryRcv = new DBQueryReceiveService(dbQueryRcvP);
 		this.addRequiredPort(dbQueryRcvP);
@@ -42,6 +46,7 @@ public class ConnexionManager extends SimpleComponent{
 		
 		DBQuerySend dbSendP = new DBQuerySend();
 		this.dbQuerySend = new DBQuerySendService(dbSendP);
+		this.dbQuerySend.setPort(dbSendP);
 		this.addProvidedService(dbQuerySend);
 		this.addProvidedPort(dbSendP);
 		
@@ -54,6 +59,9 @@ public class ConnexionManager extends SimpleComponent{
 		this.securitySend = new SecurityCheckSendService(scsP);
 		this.addProvidedPort(scsP);
 		this.addProvidedService(securitySend);
+		
+		System.out.println("lo   "+dbQuerySend.getPort());
+
 	}
 
 	public ExternalSocketOutService getSocketOut() {
@@ -104,6 +112,17 @@ public class ConnexionManager extends SimpleComponent{
 		this.securitySend = securitySend;
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o == socketIn){
+			System.out.println("Passage dans ConnexionManager, update : " + ((Service)o).getO().toString());
+			goToDatabase(((Service)o).getO());
+		}
+	}
 	
+	public void goToDatabase(Object o){
+		System.out.println("Passage dans ConnexionManager, goToDatabase : " + o.toString());
+		this.dbQuerySend.sendQuery(o);
+	}
 
 }
